@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>MS-DOS Installer</title>
+<style>
+    body {
+        background: #000000;
+        color: #00FF00;
+        font-family: "Courier New", "MS Gothic", monospace;
+        margin: 30px;
+    }
+    h1 {
+        color: #00FF00;
+        text-align: center;
+        font-size: 24px;
+        text-shadow: 0 0 5px #00FF00;
+    }
+    .dos-box {
+        background: #000000;
+        border: 2px solid #00FF00;
+        padding: 20px;
+        margin: 20px auto;
+        max-width: 800px;
+        box-shadow: 0 0 10px #00FF00;
+    }
+    .cursore {
+        color: #00FF00;
+        animation: blink 1s step-end infinite;
+    }
+    @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+    }
+    .botao {
+        display: inline-block;
+        padding: 12px 25px;
+        background: #000000;
+        color: #00FF00;
+        text-decoration: none;
+        font-weight: bold;
+        font-family: "Courier New", monospace;
+        border: 2px solid #00FF00;
+        cursor: pointer;
+        margin: 10px;
+        transition: all 0.3s;
+    }
+    .botao:hover {
+        background: #00FF00;
+        color: #000000;
+        box-shadow: 0 0 10px #00FF00;
+    }
+    pre {
+        background: #000000;
+        padding: 15px;
+        border-left: 3px solid #00FF00;
+        font-family: "Courier New", monospace;
+        font-size: 14px;
+        overflow-x: auto;
+    }
+    hr {
+        border-color: #00FF00;
+    }
+    .footer {
+        text-align: center;
+        margin-top: 30px;
+        font-size: 12px;
+    }
+</style>
+</head>
+<body>
+
+<div class="dos-box">
+    <h1>╔═══════════════════════════════════╗<br>
+    ║     MS-DOS 6.22 INSTALLER v3.1     ║<br>
+    ╚═══════════════════════════════════╝</h1>
+
+    <pre>
+    C:\> MICROSOFT CORPORATION 1995-2026
+    C:\> ALL RIGHTS RESERVED
+    
+    C:\> BEM-VINDO AO INSTALADOR MS-DOS
+    
+    C:\> REQUISITOS MÍNIMOS:
+    C:\>   • Windows 95/98/ME/XP/7/8/10/11
+    C:\>   • Python 3.6 ou superior
+    C:\>   • 10MB de espaço em disco
+    C:\>   • 64MB de RAM
+    
+    C:\> PASSO 1:
+    C:\>   Baixe o arquivo programa.py abaixo
+    
+    C:\> PASSO 2:
+    C:\>   Abra o TERMINAL (CMD) e digite:
+    C:\>   <span style="color:#FFFF00">cd C:\PASTA_DO_DOWNLOAD</span>
+    
+    C:\> PASSO 3:
+    C:\>   Execute o programa:
+    C:\>   <span style="color:#FFFF00">python programa.py</span>
+    
+    C:\> PASSO 4:
+    C:\>   Digite a chave de ativação que aparecerá
+    
+    C:\> PRESSIONE QUALQUER TECLA PARA CONTINUAR<span class="cursore">_</span>
+    </pre>
+
+    <div style="text-align: center;">
+        <a href="#" onclick="downloadFile(); return false;" class="botao">
+            ╔══════════════════════╗<br>
+            ║  DOWNLOAD programa.py ║<br>
+            ╚══════════════════════╝
+        </a>
+    </div>
+
+    <div class="footer">
+        <hr>
+        C:\> MS-DOS (C) Copyright Microsoft Corp. 1981-2026
+    </div>
+</div>
+
+<script>
+function downloadFile() {
+    // Conteúdo do arquivo programa.py
+    const pythonCode = `import os
+import sys
+import time
+import random
+import tkinter as tk
+from tkinter import messagebox, simpledialog
+import subprocess
+import threading
+
+# ============================================
+# SIMULADOR DE MS-DOS COMPLETO
+# COM INTERFACE GRÁFICA ESTILO DOS
+# ============================================
+
+class MSDOS_Simulator:
+    def __init__(self):
+        self.root = tk.Tk()
+        self.root.title("MS-DOS 6.22 Simulator")
+        self.root.geometry("900x650")
+        self.root.configure(bg="black")
+        self.root.protocol("WM_DELETE_WINDOW", self.sair)
+        
+        # Sistema de ativação
+        self.ativado = False
+        self.chave_ativacao = self.gerar_chave()
+        
+        # Arquivos do desktop
+        self.arquivos = {
+            "LEIA-ME.txt": "Este é o MS-DOS Simulator!\\nCriado por Microsoft Corp.\\nDivirta-se!",
+            "CONFIG.SYS": "DEVICE=HIMEM.SYS\\nDOS=HIGH,UMB\\nFILES=40\\nBUFFERS=30",
+            "AUTOEXEC.BAT": "@ECHO OFF\\nPROMPT $P$G\\nPATH=C:\\\\DOS\\nVER\\nECHO Bem-vindo ao MS-DOS!",
+            "COMANDOS.DOC": "COMANDOS DISPONIVEIS:\\nDIR - Lista arquivos\\nTYPE - Mostra conteudo\\nDEL - Deleta arquivo\\nEDIT - Edita arquivo\\nHELP - Ajuda"
+        }
+        
+        # Lixeira
+        self.lixeira = []
+        
+        self.criar_interface()
+        self.pedir_ativacao()
+        
+        self.root.mainloop()
+    
+    def gerar_chave(self):
+        return f"MSD-{random.randint(1000,9999)}-{random.randint(1000,9999)}-{random.randint(1000,9999)}"
+    
+    def pedir_ativacao(self):
+        janela = tk.Toplevel(self.root)
+        janela.title("ATIVACAO MS-DOS")
+        janela.geometry("500x300")
+        janela.configure(bg="black")
+        janela.transient(self.root)
+        janela.grab_set()
+        
+        tk.Label(janela, text="╔═══════════════════════════════════╗", 
+                fg="cyan", bg="black", font=("Courier", 12)).pack()
+        tk.Label(janela, text="║     ATIVACAO DO MS-DOS 6.22      ║", 
+                fg="cyan", bg="black", font=("Courier", 12)).pack()
+        tk.Label(janela, text="╚═══════════════════════════════════╝", 
+                fg="cyan", bg="black", font=("Courier", 12)).pack()
+        
+        tk.Label(janela, text=f"\\nSUA CHAVE DE INSTALACAO:", 
+                fg="yellow", bg="black", font=("Courier", 11, "bold")).pack(pady=10)
+        
+        chave_label = tk.Label(janela, text=self.chave_ativacao, 
+                               fg="lime", bg="black", font=("Courier", 14, "bold"))
+        chave_label.pack(pady=5)
+        
+        tk.Label(janela, text="\\nDIGITE A CHAVE PARA ATIVAR:", 
+                fg="white", bg="black", font=("Courier", 10)).pack(pady=10)
+        
+        self.entry_chave = tk.Entry(janela, fg="green", bg="black", 
+                                    font=("Courier", 12), width=30)
+        self.entry_chave.pack(pady=5)
+        self.entry_chave.focus()
+        
+        tk.Label(janela, text="\\nAPOS ATIVAR, O SISTEMA INICIARA", 
+                fg="gray", bg="black", font=("Courier", 9)).pack()
+        
+        btn_frame = tk.Frame(janela, bg="black")
+        btn_frame.pack(pady=15)
+        
+        tk.Button(btn_frame, text="ATIVAR", command=lambda: self.verificar_chave(janela),
+                 bg="black", fg="green", font=("Courier", 10, "bold"),
+                 width=15).pack()
+        
+        self.entry_chave.bind("<Return>", lambda e: self.verificar_chave(janela))
+    
+    def verificar_chave(self, janela):
+        if self.entry_chave.get().strip() == self.chave_ativacao:
+            self.ativado = True
+            janela.destroy()
+            self.terminal_insert("\\n[SISTEMA ATIVADO COM SUCESSO!]\\n")
+            self.terminal_insert("C:\\\\>")
+            self.criar_icones_desktop()
+        else:
+            messagebox.showerror("ERRO", "CHAVE INVALIDA!\\nO SISTEMA SERA ENCERRADO.")
+            self.root.destroy()
+    
+    def criar_interface(self):
+        # Frame principal
+        main_frame = tk.Frame(self.root, bg="black")
+        main_frame.pack(fill=tk.BOTH, expand=True)
+        
+        # Desktop area
+        self.desktop_frame = tk.Frame(main_frame, bg="black", height=350)
+        self.desktop_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        # Informações do sistema no topo
+        info_frame = tk.Frame(self.root, bg="black")
+        info_frame.pack(fill=tk.X, padx=5, pady=2)
+        
+        tk.Label(info_frame, text="MS-DOS 6.22 Simulator | (C) Microsoft 1995-2026", 
+                fg="green", bg="black", font=("Courier", 8)).pack(side=tk.LEFT)
+        tk.Label(info_frame, text="Pressione F1 para ajuda", 
+                fg="yellow", bg="black", font=("Courier", 8)).pack(side=tk.RIGHT)
+        
+        # Terminal (parte inferior)
+        terminal_frame = tk.Frame(main_frame, bg="black")
+        terminal_frame.pack(fill=tk.X, side=tk.BOTTOM, padx=5, pady=5)
+        
+        # Prompt do DOS
+        tk.Label(terminal_frame, text="C:\\\\>", fg="lime", bg="black", 
+                font=("Courier", 10, "bold")).pack(side=tk.LEFT)
+        
+        self.cmd_entry = tk.Entry(terminal_frame, fg="lime", bg="black", 
+                                  font=("Courier", 10), insertbackground="lime")
+        self.cmd_entry.pack(side=tk.LEFT, fill=tk.X, expand=True)
+        self.cmd_entry.bind("<Return>", self.executar_comando)
+        
+        # Área de saída do terminal
+        self.terminal_text = tk.Text(main_frame, fg="#00FF00", bg="black", 
+                                     font=("Courier", 9), height=12, wrap=tk.WORD)
+        self.terminal_text.pack(fill=tk.X, side=tk.BOTTOM, padx=5, pady=5)
+        self.terminal_text.config(state=tk.DISABLED)
+        
+        self.cmd_entry.focus()
+        self.root.bind("<F1>", self.mostrar_ajuda)
+    
+    def criar_icones_desktop(self):
+        # Limpar desktop
+        for widget in self.desktop_frame.winfo_children():
+            widget.destroy()
+        
+        # Criar ícones
+        posicoes = [(20, 20), (120, 20), (220, 20), (320, 20)]
+        icones = ["LEIA-ME.txt", "CONFIG.SYS", "AUTOEXEC.BAT", "COMANDOS.DOC"]
+        
+        self.icones_widgets = {}
+        
+        for i, (nome, pos) in enumerate(zip(icones, posicoes)):
+            frame = tk.Frame(self.desktop_frame, bg="black")
+            frame.place(x=pos[0], y=pos[1])
+            
+            # Ícone (ASCII art)
+            icon_text = tk.Label(frame, text="📄", fg="white", bg="black", 
+                                font=("Segoe UI", 16))
+            icon_text.pack()
+            
+            label = tk.Label(frame, text=nome, fg="cyan", bg="black", 
+                           font=("Courier", 8), cursor="hand2")
+            label.pack()
+            
+            # Eventos
+            label.bind("<Button-1>", lambda e, n=nome: self.abrir_arquivo(n))
+            label.bind("<Button-3>", lambda e, n=nome: self.menu_contextual(e, n))
+            icon_text.bind("<Button-1>", lambda e, n=nome: self.abrir_arquivo(n))
+            
+            self.icones_widgets[nome] = frame
+        
+        # Ícone da lixeira
+        lixeira_frame = tk.Frame(self.desktop_frame, bg="black")
+        lixeira_frame.place(x=20, y=150)
+        lixeira_icon = tk.Label(lixeira_frame, text="🗑️", fg="white", bg="black", 
+                               font=("Segoe UI", 16))
+        lixeira_icon.pack()
+        lixeira_label = tk.Label(lixeira_frame, text="LIXEIRA", fg="red", bg="black", 
+                                font=("Courier", 8), cursor="hand2")
+        lixeira_label.pack()
+        
+        lixeira_label.bind("<Button-1>", lambda e: self.abrir_lixeira())
+        lixeira_icon.bind("<Button-1>", lambda e: self.abrir_lixeira())
+    
+    def abrir_arquivo(self, nome):
+        if not self.ativado:
+            return
+        
+        if nome in self.arquivos:
+            self.terminal_insert(f"\\nMOSTRANDO CONTEUDO DE {nome}:\\n")
+            self.terminal_insert("-" * 50 + "\\n")
+            self.terminal_insert(self.arquivos[nome] + "\\n")
+            self.terminal_insert("-" * 50 + "\\n")
+        else:
+            self.terminal_insert(f"\\nARQUIVO {nome} NAO ENCONTRADO!\\n")
+        
+        self.terminal_insert("C:\\\\>")
+    
+    def menu_contextual(self, event, nome):
+        if not self.ativado:
+            return
+        
+        menu = tk.Menu(self.root, tearoff=0, bg="black", fg="lime")
+        menu.add_command(label="Abrir", command=lambda: self.abrir_arquivo(nome))
+        menu.add_command(label="Editar", command=lambda: self.editar_arquivo(nome))
+        menu.add_command(label="Excluir", command=lambda: self.excluir_arquivo(nome))
+        menu.add_separator()
+        menu.add_command(label="Renomear", command=lambda: self.renomear_arquivo(nome))
+        menu.post(event.x_root, event.y_root)
+    
+    def editar_arquivo(self, nome):
+        editor = tk.Toplevel(self.root)
+        editor.title(f"Editando - {nome}")
+        editor.geometry("600x400")
+        editor.configure(bg="black")
+        
+        tk.Label(editor, text=f"Editando: {nome}", fg="yellow", bg="black",
+                font=("Courier", 12, "bold")).pack(pady=5)
+        
+        text_area = tk.Text(editor, bg="black", fg="lime", font=("Courier", 10),
+                           insertbackground="lime")
+        text_area.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        if nome in self.arquivos:
+            text_area.insert(tk.END, self.arquivos[nome])
+        
+        def salvar():
+            self.arquivos[nome] = text_area.get(1.0, tk.END).rstrip()
+            editor.destroy()
+            self.terminal_insert(f"\\nARQUIVO {nome} SALVO!\\nC:\\\\>")
+        
+        btn_frame = tk.Frame(editor, bg="black")
+        btn_frame.pack(pady=5)
+        tk.Button(btn_frame, text="SALVAR (F2)", command=salvar, 
+                 bg="black", fg="green", font=("Courier", 10)).pack()
+        editor.bind("<F2>", lambda e: salvar())
+    
+    def excluir_arquivo(self, nome):
+        if nome in self.arquivos:
+            self.lixeira.append(nome)
+            del self.arquivos[nome]
+            if nome in self.icones_widgets:
+                self.icones_widgets[nome].destroy()
+                del self.icones_widgets[nome]
+            self.terminal_insert(f"\\n{nome} MOVIDO PARA A LIXEIRA!\\nC:\\\\>")
+    
+    def renomear_arquivo(self, nome):
+        novo_nome = simpledialog.askstring("Renomear", "Novo nome do arquivo:")
+        if novo_nome and nome in self.arquivos:
+            self.arquivos[novo_nome] = self.arquivos.pop(nome)
+            if nome in self.icones_widgets:
+                self.icones_widgets[nome].destroy()
+                del self.icones_widgets[nome]
+            self.terminal_insert(f"\\n{nome} RENOMEADO PARA {novo_nome}!\\nC:\\\\>")
+            self.criar_icones_desktop()
+    
+    def abrir_lixeira(self):
+        if not self.lixeira:
+            self.terminal_insert("\\nLIXEIRA VAZIA!\\nC:\\\\>")
+            return
+        
+        lixeira_win = tk.Toplevel(self.root)
+        lixeira_win.title("Lixeira - MS-DOS")
+        lixeira_win.geometry("400x300")
+        lixeira_win.configure(bg="black")
+        
+        tk.Label(lixeira_win, text="🗑️ LIXEIRA DO MS-DOS", fg="red", bg="black",
+                font=("Courier", 14, "bold")).pack(pady=10)
+        
+        listbox = tk.Listbox(lixeira_win, bg="black", fg="lime", font=("Courier", 10))
+        listbox.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        for item in self.lixeira:
+            listbox.insert(tk.END, item)
+        
+        def restaurar():
+            sel = listbox.curselection()
+            if sel:
+                item = listbox.get(sel)
+                self.arquivos[item] = "CONTEUDO RESTAURADO DA LIXEIRA"
+                self.lixeira.remove(item)
+                listbox.delete(sel)
+                self.terminal_insert(f"\\n{item} RESTAURADO!\\n")
+                self.criar_icones_desktop()
+        
+        def esvaziar():
+            self.lixeira.clear()
+            listbox.delete(0, tk.END)
+            self.terminal_insert("\\nLIXEIRA ESVAZIADA!\\n")
+        
+        btn_frame = tk.Frame(lixeira_win, bg="black")
+        btn_frame.pack(pady=10)
+        tk.Button(btn_frame, text="RESTAURAR", command=restaurar, 
+                 bg="black", fg="green").pack(side=tk.LEFT, padx=10)
+        tk.Button(btn_frame, text="ESVAZIAR", command=esvaziar, 
+                 bg="black", fg="red").pack(side=tk.LEFT, padx=10)
+    
+    def executar_comando(self, event):
+        cmd = self.cmd_entry.get().strip()
+        self.cmd_entry.delete(0, tk.END)
+        
+        self.terminal_insert(f"\\nC:\\\\>{cmd}\\n")
+        
+        if not self.ativado and cmd.lower() not in ["exit", "sair"]:
+            self.terminal_insert("SISTEMA NAO ATIVADO!\\n")
+        elif cmd.lower() == "dir":
+            for nome in self.arquivos:
+                self.terminal_insert(f"{nome}\\n")
+        elif cmd.lower().startswith("type "):
+            nome = cmd[5:]
+            if nome in self.arquivos:
+                self.terminal_insert(self.arquivos[nome] + "\\n")
+            else:
+                self.terminal_insert("ARQUIVO NAO ENCONTRADO!\\n")
+        elif cmd.lower().startswith("del "):
+            nome = cmd[4:]
+            self.excluir_arquivo(nome)
+        elif cmd.lower() == "cls":
+            self.terminal_text.config(state=tk.NORMAL)
+            self.terminal_text.delete(1.0, tk.END)
+            self.terminal_text.config(state=tk.DISABLED)
+        elif cmd.lower() == "help":
+            self.mostrar_ajuda(None)
+        elif cmd.lower() in ["exit", "sair"]:
+            self.sair()
+        else:
+            self.terminal_insert(f"COMANDO '{cmd}' NAO RECONHECIDO!\\n")
+        
+        self.terminal_insert("C:\\\\>")
+    
+    def mostrar_ajuda(self, event):
+        ajuda = """
+╔══════════════════════════════════════════╗
+║          COMANDOS DO MS-DOS              ║
+╠══════════════════════════════════════════╣
+║ DIR     - Lista arquivos do desktop      ║
+║ TYPE    - Mostra conteudo do arquivo     ║
+║ DEL     - Deleta arquivo (vai pra lixeira)║
+║ CLS     - Limpa a tela do terminal       ║
+║ HELP    - Mostra esta ajuda               ║
+║ EXIT    - Sai do simulador                ║
+╚══════════════════════════════════════════╝
+        """
+        self.terminal_insert(ajuda + "\\n")
+        self.terminal_insert("C:\\\\>")
+    
+    def terminal_insert(self, text):
+        self.terminal_text.config(state=tk.NORMAL)
+        self.terminal_text.insert(tk.END, text)
+        self.terminal_text.see(tk.END)
+        self.terminal_text.config(state=tk.DISABLED)
+    
+    def sair(self):
+        if messagebox.askyesno("MS-DOS", "Deseja sair do MS-DOS?"):
+            self.root.destroy()
+
+# Iniciar o simulador
+if __name__ == "__main__":
+    app = MSDOS_Simulator()
+`
+    
+    // Criar blob e fazer download
+    const blob = new Blob([pythonCode], {type: "text/plain"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "programa.py";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    // Mostrar mensagem de sucesso
+    alert("✅ DOWNLOAD INICIADO!\n\n📁 Arquivo: programa.py\n📝 Salve na pasta desejada\n🐍 Execute com: python programa.py");
+}
+</script>
+
+</body>
+</html>
